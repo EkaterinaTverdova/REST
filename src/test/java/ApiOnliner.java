@@ -23,9 +23,9 @@ public class ApiOnliner {
         String url = "https://kurs.onliner.by/sdapi/kurs/api/bestrate?currency=%s&type=nbrb".formatted(currency);
         String responceBody = given()
                 .log().all()
-                .when()
+        .when()
                 .get(url)
-                .then()
+        .then()
                 .log().all()
                 .statusCode(200)
                 .header("Content-Type", containsString("application/json"))
@@ -35,9 +35,9 @@ public class ApiOnliner {
                 .toString();
         System.out.println("Ответ на запрос: " + responceBody);
 
-        String regex = "amount\":\\s*\"\\d+,\\d{4}";
+        String regex = "\"amount\"\\s*:\\s*\"\\d+,\\d{4}\"";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(responceBody);
-        //assertTrue(matcher.find());
+        assertTrue(matcher.find(), "regex " + regex);
     }
 }
